@@ -4,7 +4,7 @@ import java.util.*;
 
 
 /**
- * 所有Example都需要继承自该类<br>
+ * 所有Example都需要继承自该类</br>
  * 该类自动生成不需要修改
  * @author suman
  * 2016年8月15日 下午1:58:40
@@ -22,7 +22,7 @@ public abstract class BaseExample<T extends BaseExample.GeneratedCriteria> {
 
     protected String tableAlias;
 
-    protected List<GeneratedCriteria> oredCriteria;
+    protected List<BaseExample.GeneratedCriteria> oredCriteria;
 
     protected Map<String, ColumnContainerBase> columnContainerMap;
 
@@ -84,7 +84,7 @@ public abstract class BaseExample<T extends BaseExample.GeneratedCriteria> {
 
     public List<GeneratedCriteria> getOredCriteria() {
         if(oredCriteria == null || oredCriteria.isEmpty()){
-            T criteriaInternal = createCriteriaInternal();
+            GeneratedCriteria criteriaInternal = createCriteriaInternal();
             criteriaInternal.addCriterion("1=1");
             oredCriteria.add(criteriaInternal);
         }else if(oredCriteria.size()==1){
@@ -106,15 +106,26 @@ public abstract class BaseExample<T extends BaseExample.GeneratedCriteria> {
         return leftJoinTableSet;
     }
 
-    public void or(T criteria) {
+    public T or() {
+        T criteria = createCriteriaInternal();
+        oredCriteria.add(criteria);
+        return criteria;
+    }
+
+    public void or(GeneratedCriteria criteria) {
         oredCriteria.add(criteria);
         if(!criteria.getTableName().equals(getTableName())){
             leftJoinTableSet.add(criteria.getTableName());
         }
     }
 
+    public T or(String orSql){
+        T criteria = createCriteria();
+        criteria.addCriterion(orSql);
+        return criteria;
+    }
 
-    public GeneratedCriteria and(T criteria) {
+    public GeneratedCriteria and(GeneratedCriteria criteria) {
         GeneratedCriteria oldCriteria =  criteria;
         if(oredCriteria.size()<=0){
             oredCriteria.add(criteria);
@@ -126,6 +137,17 @@ public abstract class BaseExample<T extends BaseExample.GeneratedCriteria> {
             leftJoinTableSet.add(criteria.getTableName());
         }
         return oldCriteria;
+    }
+
+    public GeneratedCriteria and(String andSql) {
+        GeneratedCriteria criteria = null;
+        if(oredCriteria.size()<=0){
+            criteria = createCriteria();
+        }else{
+            criteria = oredCriteria.get(oredCriteria.size()-1);
+        }
+        criteria.addCriterion(andSql);
+        return criteria;
     }
 
     public T createCriteria(){
@@ -444,7 +466,6 @@ public abstract class BaseExample<T extends BaseExample.GeneratedCriteria> {
             return tableName;
         }
     }
-
-
-   
+    public  void wrap(List values){};
+    public void setComplexProperty(String property,List values){};
 }

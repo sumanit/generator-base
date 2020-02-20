@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class BaseServiceImpl <T extends Model,E extends BaseExample> implements BaseService<T,E> {
+public abstract class BaseServiceImpl <T extends Model,D extends DTOInterface,E extends BaseExample> implements BaseService<T,D,E> {
 	/**
 	 * slf4j 日志对象 用来记录log
 	 */
@@ -63,7 +63,7 @@ public abstract class BaseServiceImpl <T extends Model,E extends BaseExample> im
 		
 	}
 
-	public int countByExample(E example) {
+	public long countByExample(E example) {
 		return getMapper().countByExample(example);
 	}
 
@@ -106,7 +106,7 @@ public abstract class BaseServiceImpl <T extends Model,E extends BaseExample> im
 		return columnNamePropertyMap.get(property);
 	}
 	
-	public Map getColumnNamePropertyMap(){
+	private Map getColumnNamePropertyMap(){
 		Map<String, String> result = new HashMap<String, String>();
 		try {
 			SqlSession sqlSession = getSqlSessionByMapper(getMapper());
@@ -133,7 +133,6 @@ public abstract class BaseServiceImpl <T extends Model,E extends BaseExample> im
         Field mapperInterface = mapperProxy.getClass().getDeclaredField("mapperInterface");
         mapperInterface.setAccessible(true);
         return  (Class) mapperInterface.get(mapperProxy);
-
 	}	
 }
 

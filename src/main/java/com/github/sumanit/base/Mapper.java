@@ -18,7 +18,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
 	 * @param example 查询条件
 	 * @return 满足条件的数据数量
 	 */
-    int countByExample(E example);
+    long countByExample(E example);
     
     /**
 	 * 通过条件删除数据
@@ -35,7 +35,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
     int deleteByPrimaryKey(Object primaryKey);
 
     /**
-     * 将数据插入数据库<br>
+     * 将数据插入数据库</br>
      * 所有字段都插入数据库不管是不是null
      * @param record 需要插入数据库的对象
      * @return
@@ -43,7 +43,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
     int insert(T record);
 
     /**
-     * 将数据插入数据库<br>
+     * 将数据插入数据库</br>
      * 将所有非null字段都插入数据库
      * @param record
      * @return
@@ -67,7 +67,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
 
     
     /**
-     * 通过条件更新数据<br>
+     * 通过条件更新数据</br>
      * 更新所有字段 
      * @param record 需要更新的内容
      * @param example 更新的条件
@@ -76,7 +76,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
     int updateByExampleSelective(@Param("record") T record, @Param("example") E example);
 
     /**
-     * 通过条件更新数据<br>
+     * 通过条件更新数据</br>
      * 更新所有字段 
      * @param record 需要更新的内容
      * @param example 更新的条件
@@ -85,7 +85,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
     int updateByExample(@Param("record") T record, @Param("example") E example);
 
     /**
-     * 通过主键更新对象<br>
+     * 通过主键更新对象</br>
      * 只更新非null字段
      * @param record 需要更新的内容及主键 主键不可为空
      * @return 更新的数量
@@ -93,7 +93,7 @@ public interface Mapper<T extends Model,E extends BaseExample> {
     int updateByPrimaryKeySelective(T record);
 
     /**
-     * 通过主键更新对象<br>
+     * 通过主键更新对象</br>
      * 更新所有字段
      * @param record 需要更新的内容及主键 主键不可为空
      * @return 更新的数量

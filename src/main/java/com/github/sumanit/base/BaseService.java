@@ -3,6 +3,7 @@ package com.github.sumanit.base;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service接口的基本接口，所有Service接口必须继承
@@ -10,7 +11,7 @@ import java.util.List;
  *
  * @param <T> 操作对应的model
  */
-public interface BaseService<T extends Model,E extends BaseExample>{
+public interface BaseService<T extends Model,D extends DTOInterface,E extends BaseExample>{
 	/**
 	 * 获取service对应的Mapper来进行操作
 	 * @return
@@ -22,7 +23,7 @@ public interface BaseService<T extends Model,E extends BaseExample>{
 	 * @param example 查询条件
 	 * @return 满足条件的数据数量
 	 */
-	int countByExample(E example);
+	long countByExample(E example);
 
 	/**
 	 * 通过条件删除数据
@@ -39,7 +40,7 @@ public interface BaseService<T extends Model,E extends BaseExample>{
     int deleteByPrimaryKey(Object key);
     
     /**
-     * 将数据插入数据库<br>
+     * 将数据插入数据库</br>
      * 所有字段都插入数据库不管是不是null
      * @param record 需要插入数据库的对象
      * @return
@@ -47,7 +48,7 @@ public interface BaseService<T extends Model,E extends BaseExample>{
     T insert(T record);
     
    /**
-    * 将数据插入数据库<br>
+    * 将数据插入数据库</br>
     * 将所有非null字段都插入数据库
     * @param record
     * @return
@@ -70,7 +71,7 @@ public interface BaseService<T extends Model,E extends BaseExample>{
     T selectByPrimaryKey(Object key);
 
     /**
-     * 通过条件更新数据<br>
+     * 通过条件更新数据</br>
      * 只更新非null字段
      * @param record 需要更新的内容
      * @param example 更新的条件
@@ -79,7 +80,7 @@ public interface BaseService<T extends Model,E extends BaseExample>{
     int updateByExampleSelective(T record, E example);
     
     /**
-     * 通过条件更新数据<br>
+     * 通过条件更新数据</br>
      * 更新所有字段 
      * @param record 需要更新的内容
      * @param example 更新的条件
@@ -89,14 +90,14 @@ public interface BaseService<T extends Model,E extends BaseExample>{
     
     
     /**
-     * 通过主键更新对象<br>
+     * 通过主键更新对象</br>
      * 只更新非null字段
      * @param record 需要更新的内容及主键 主键不可为空
      * @return 更新的数量
      */
     int updateByPrimaryKeySelective(T record);
     /**
-     * 通过主键更新对象<br>
+     * 通过主键更新对象</br>
      * 更新所有字段
      * @param record 需要更新的内容及主键 主键不可为空
      * @return 更新的数量
@@ -123,5 +124,8 @@ public interface BaseService<T extends Model,E extends BaseExample>{
 	 * @return
 	 */
 	String getColumnNameByProperty(String property);
-	
+
+	E buildExample(D dto,QueryModel queryModel);
+
+	void buildComplexProperty(E baseExample,List<T> result);
 }
